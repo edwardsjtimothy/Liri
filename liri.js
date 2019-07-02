@@ -1,5 +1,10 @@
 require("dotenv").config();
 
+//user input from terminal 
+
+var input = process.argv[3];
+
+var run = process.argv[2];
 
 //axios
 
@@ -7,7 +12,7 @@ var axios = require("axios");
 
 //bands in town 
 
-var bandsUrl = "https://rest.bandsintown.com/artists/" + "Guster" + "/events?app_id=codingbootcamp";
+var bandsUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
 
 //spotify
 
@@ -16,12 +21,6 @@ var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 
 var spotify = new Spotify(keys.spotify);
-
-//user input from terminal 
-
-var input = process.argv[3];
-
-var run = process.argv[2];
 
 //Bands in Town Api Call
 
@@ -50,7 +49,7 @@ axios.get(bandsUrl).then(
 
 };
 
-concertThis();
+
 
 
 
@@ -67,4 +66,14 @@ spotify
   .catch(function(err) {
     console.log(err);
   });
+};
+
+
+// switch to select which api to run 
+switch (run) {
+    //concert search 
+    case "concert-this": 
+    concertThis();
+    break;
+
 };
