@@ -61,7 +61,7 @@ function concertThis() {
 
 //spotify API call 
 
-function spotifyThisSong() {
+function spotifyThis() {
 
   spotify
     .search({ type: 'track', query: input })
@@ -120,7 +120,7 @@ Actors: ${movieInfo.Actors}
 };
 
 
-//random output function 
+//read random.txt and determine output 
 
 function doWhatItSays() {
 
@@ -137,7 +137,9 @@ fs.readFile("random.txt", "utf8", function(error, data) {
 
   console.log(dataArr);
 
+
 });
+};
 
 // switch to select which api to run 
 switch (run) {
@@ -149,7 +151,7 @@ switch (run) {
 
   //song search
   case "spotify-this-song":
-    spotifyThisSong();
+    spotifyThis();
     break;
 
   //movie search
@@ -162,3 +164,5 @@ switch (run) {
       break;
 
 };
+
+doWhatItSays();
