@@ -4,7 +4,6 @@ require("dotenv").config();
 
 var input = process.argv[3];
 var run = process.argv[2];
-console.log(process.argv);
 
 //write to text file 
 
@@ -29,6 +28,23 @@ var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
 
 var spotify = new Spotify(keys.spotify);
+
+//randomSearch 
+
+function randomSearch() {
+  var ranNum = Math.floor(Math.random() * 3) + 1;
+
+  if (ranNum === 1) {
+    bandsUrl = "https://rest.bandsintown.com/artists/" + "John Mayer" + "/events?app_id=codingbootcamp";
+    concertThis();
+  } else if (ranNum === 2) {
+    movieUrl =  "http://www.omdbapi.com/?t=" + "The+Lord+of+the+Rings" + "&apikey=trilogy"
+    movieThis();
+  } else {
+    spotUrl = "https://api.spotify.com/v1/" + "I Want it That Way" + "/7yCPwWs66K8Ba5lFuU2bcx"
+    spotifyThis();
+  };
+};
 
 //Bands in Town Api Call
 
@@ -64,13 +80,15 @@ function concertThis() {
 function spotifyThis() {
 
   spotify
-    .search({ type: 'track', query: input })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+
+  var spotUrl = "https://api.spotify.com/v1/" + input + "/7yCPwWs66K8Ba5lFuU2bcx"
+  .request(spotUrl)
+  .then(function(data) {
+    console.log(data); 
+  })
+  .catch(function(err) {
+    console.error('Error occurred: ' + err); 
+  });
 };
 
 //omdb API call 
@@ -137,8 +155,10 @@ fs.readFile("random.txt", "utf8", function(error, data) {
 
   console.log(dataArr);
 
-
 });
+
+randomSearch();
+
 };
 
 // switch to select which api to run 
@@ -150,7 +170,7 @@ switch (run) {
     break;
 
   //song search
-  case "spotify-this-song":
+  case "spotify-this":
     spotifyThis();
     break;
 
@@ -164,5 +184,3 @@ switch (run) {
       break;
 
 };
-
-doWhatItSays();
