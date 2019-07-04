@@ -2,6 +2,7 @@ require("dotenv").config();
 
 //user input from terminal 
 
+//have not found a way to concatenate multiple process.argv array positions into one input. Thus, when running a search of an item with multiple words, must be formatted with plus signs (It's+a+mad+mad+mad+world).
 var input = process.argv[3];
 var run = process.argv[2];
 
@@ -31,6 +32,7 @@ var spotify = new Spotify(keys.spotify);
 
 //randomSearch 
 
+//am able to extract data from random.txt but I have been unable to figure out how to replace input with that data. Every way I have tried returns undefined or doesn't return. So I built this to do the same thing until I can fix it.
 function randomSearch() {
   var ranNum = Math.floor(Math.random() * 3) + 1;
 
@@ -77,19 +79,32 @@ function concertThis() {
 
 //spotify API call 
 
+//spotify does not want to recognize my authentication token. I have set it up with all of the different configurations documented on the node-spotify-API and gone through the instruction provided in the homework read.me As it stands, it will return an object but says "no token provided". 
 function spotifyThis() {
 
   spotify
 
-  var spotUrl = "https://api.spotify.com/v1/" + input + "/7yCPwWs66K8Ba5lFuU2bcx"
-  .request(spotUrl)
-  .then(function(data) {
-    console.log(data); 
-  })
-  .catch(function(err) {
-    console.error('Error occurred: ' + err); 
+  spotify.search({ type: 'track', query: input, limit: 1 }, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+   
+  console.log(data); 
   });
 };
+
+ //doesn't complete the request or return anything 
+
+//   var spotUrl = "https://api.spotify.com/v1/" + input + "/7yCPwWs66K8Ba5lFuU2bcx"
+//   .request(spotUrl)
+//   .then(function(data) {
+//     console.log("return");
+//     console.log(data); 
+//   })
+//   .catch(function(err) {
+//     console.error('Error occurred: ' + err); 
+//   });
+// };
 
 //omdb API call 
 
@@ -183,4 +198,4 @@ switch (run) {
       doWhatItSays();
       break;
 
-};
+}
