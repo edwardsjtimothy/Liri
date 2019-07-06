@@ -2,8 +2,7 @@ require("dotenv").config();
 
 //user input from terminal 
 
-//have not found a way to concatenate multiple process.argv array positions into one input. Thus, when running a search of an item with multiple words, must be formatted with plus signs (It's+a+mad+mad+mad+world).
-var input = process.argv[3];
+var input = process.argv.slice(3).join(" ");
 var run = process.argv[2];
 
 //write to text file 
